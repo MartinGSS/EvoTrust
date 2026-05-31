@@ -39,6 +39,43 @@ function SandboxUI(config){
 	var resetButton = new Button({x:172, y:135+70*2, text_id:"label_reset", message:"tournament/reset", size:"short"});
 	dom.appendChild(resetButton.dom);
 
+    // Results panel (hidden by default)
+  var resultsPanel = document.createElement("div");
+  resultsPanel.style.display = "none";
+  resultsPanel.style.position = "absolute";
+  resultsPanel.style.left = "120px";
+  resultsPanel.style.top = "100px";
+  resultsPanel.style.fontFamily = "FuturaHandwritten";
+  resultsPanel.style.fontSize = "16px";
+  dom.appendChild(resultsPanel);
+
+  listen(self, "tournament/finished", function(agents){
+      // Hide buttons
+      playButton.dom.style.display = "none";
+      stepButton.dom.style.display = "none";
+      resetButton.dom.style.display = "none";
+
+      // Build results
+      var html = "<b>Final Population:</b><br><br>";
+      for(var i=0; i<agents.length; i++){
+          if(agents[i].count > 0){
+              var name = Words.get("label_short_"+agents[i].strategy);
+              var color = PEEP_METADATA[agents[i].strategy].color;
+              html += "<span style='color:"+color+"'>"+name.toUpperCase()+": "+agents[i].count+"</span><br>";
+          }
+      }
+      resultsPanel.innerHTML = html;
+      resultsPanel.style.display = "block";
+  });
+
+  // Hide results and show buttons again on reset
+  listen(self, "tournament/reset", function(){
+      playButton.dom.style.display = "block";
+      stepButton.dom.style.display = "block";
+      resetButton.dom.style.display = "block";
+      resultsPanel.style.display = "none";
+  });
+
 	/////////////////////////////////////////
 	// Create TABS & PAGES //////////////////
 	/////////////////////////////////////////

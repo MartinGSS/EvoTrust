@@ -334,8 +334,9 @@ function Tournament(config){
   var _startAutoPlay_continue = function(){
       if(_step==0) _tournamentCount++;
       if(_tournamentCount >= Tournament.MAX_TOURNAMENTS){
-          publish("tournament/autoplay/stop");
-          return;
+        publish("tournament/autoplay/stop");
+        publish("tournament/finished", [AGENTS]);
+        return;
       }
       _nextStep();
       setTimeout(function(){
