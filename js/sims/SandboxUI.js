@@ -350,7 +350,7 @@ function SandboxUI(config){
 	page.appendChild(slider_turns.dom);
 
 	// Rule: Eliminate/Reproduce how many? (1 to 12)
-	var rule_evolution = _makeLabel("sandbox_rules_2", {x:0, y:100, w:433});
+	var rule_evolution = _makeLabel("sandbox_rules_2", {x:0, y:76, w:433});
 	var slider_evolution = new Slider({
 		x:0, y:139, width:430,
 		min:1, max:10, step:1,
@@ -367,7 +367,7 @@ function SandboxUI(config){
 	page.appendChild(slider_evolution.dom);
 
 	// Rule: Noise (0% to 50%)
-	var rule_noise = _makeLabel("sandbox_rules_3", {x:0, y:225, w:433});
+	var rule_noise = _makeLabel("sandbox_rules_3", {x:0, y:185, w:433});
 	var slider_noise = new Slider({
 		x:0, y:249, width:430,
 		min:0.00, max:0.50, step:0.01,
@@ -384,7 +384,7 @@ function SandboxUI(config){
 	page.appendChild(rule_noise);
 	page.appendChild(slider_noise.dom)
   // Rule: Total tournaments
-var rule_tournaments = _makeLabel("sandbox_rules_4", {x:0, y:350, w:433});
+var rule_tournaments = _makeLabel("sandbox_rules_4", {x:0, y:295, w:433});
 var slider_tournaments = new Slider({
     x:0, y:331, width:430,
     min:1, max:200, step:1,
