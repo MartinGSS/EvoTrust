@@ -336,6 +336,8 @@ function Tournament(config){
       if(_tournamentCount >= Tournament.MAX_TOURNAMENTS){
         publish("tournament/autoplay/stop");
         publish("tournament/finished", [AGENTS]);
+        console.log("tournament finished!", AGENTS);
+        publish("tournament/finished", [AGENTS]);
         return;
       }
       _nextStep();
