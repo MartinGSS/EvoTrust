@@ -32,6 +32,11 @@ subscribe("rules/turns",function(value){
 	Tournament.NUM_TURNS = value;
 });
 
+Tournament.MAX_TOURNAMENTS = 50;
+subscribe("rules/tournaments", function(value){
+    Tournament.MAX_TOURNAMENTS = value;
+});
+
 // OH THAT'S SO COOL. Mostly C: Pavlov wins, Mostly D: tit for two tats wins (with 5% mistake!)
 // ALSO, NOISE: tft vs all_d. no random: tft wins. low random: tf2t wins. high random: all_d wins. totally random: nobody wins
 
@@ -317,13 +322,26 @@ function Tournament(config){
 		if(_step==2) publish("tournament/reproduce");
 		_step = (_step+1)%3;
 	};
-	var _startAutoPlay = function(){
-		self.isAutoPlaying = true;
-		_nextStep();
-		setTimeout(function(){
-			if(self.isAutoPlaying) _startAutoPlay();
-		},150);
-	};
+  var _tournamentCount = 0;
+  var _startAutoPlay = function(){
+      self.isAutoPlaying = true;
+      _tournamentCount = 0;
+      _nextStep();
+      setTimeout(function(){
+          if(self.isAutoPlaying) _startAutoPlay_continue();
+      },150);
+  };
+  var _startAutoPlay_continue = function(){
+      if(_step==0) _tournamentCount++;
+      if(_tournamentCount >= Tournament.MAX_TOURNAMENTS){
+          publish("tournament/autoplay/stop");
+          return;
+      }
+      _nextStep();
+      setTimeout(function(){
+          if(self.isAutoPlaying) _startAutoPlay_continue();
+      },150);
+  };
 	var _stopAutoPlay = function(){
 		self.isAutoPlaying = false;
 	};

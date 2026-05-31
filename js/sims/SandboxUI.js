@@ -382,12 +382,29 @@ function SandboxUI(config){
 		rule_noise.innerHTML = words;
 	});
 	page.appendChild(rule_noise);
-	page.appendChild(slider_noise.dom);
+	page.appendChild(slider_noise.dom)
+  // Rule: Total tournaments
+var rule_tournaments = _makeLabel("sandbox_rules_4", {x:0, y:350, w:433});
+var slider_tournaments = new Slider({
+    x:0, y:415, width:430,
+    min:1, max:200, step:1,
+    message: "rules/tournaments"
+});
+sliders.push(slider_tournaments);
+slider_tournaments.slideshow = self.slideshow;
+listen(self, "rules/tournaments",function(value){
+    var words = Words.get("sandbox_rules_4");
+    words = words.replace(/\[N\]/g, value+"");
+    rule_tournaments.innerHTML = words;
+});
+page.appendChild(rule_tournaments);
+page.appendChild(slider_tournaments.dom);;
 
 	// DEFAULTS
 	publish("rules/turns", [10]);
 	publish("rules/evolution", [5]);
 	publish("rules/noise", [0.05]);
+  publish("rules/tournaments", [50]);
 
 	/////////////////////////////////////////
 	// Add & Remove Object //////////////////
